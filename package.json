@@ -2,20 +2,30 @@
   "name": "scheduler",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "faster": "^3.5.0",
     "grunt-assemble": "^0.6.3"
   },
   "dependencies": {
+    "async": "^2.6.0",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "ejs": "^2.5.8",
+    "electron": "^2.0.0",
+    "express-session": "^1.15.6",
     "express3-handlebars": "^0.5.2",
     "handlebars": "^4.0.11",
+    "html-pdf": "^2.2.0",
     "is-empty": "^1.2.0",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "node-async-loop": "^1.2.2",
+    "prompt-boxes": "^1.1.6",
+    "sql-formatter": "^2.3.0"
   }
 }

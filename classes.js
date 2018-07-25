@@ -2,17 +2,45 @@ var FITS = {
     bestfit: [],
     bestfitspace: [],
     bestclassvalue: [],
+    middlefit: [],
+    middlefitspace: [],
     worsefit: [],
     worsefitspace: [],
     worseclassvalue: [],
+    middlefitclassvalue:[],
+
 
 
     takeNewbestfit: function (classname) {
         this.bestfit.push(classname);
     },
-
+    takeallbestclassvalues: function (classname) {
+        this.bestclassvalue = classname;
+    },
+    takeallmiddleclassvalues: function (classname) {
+        this.middlefitclassvalue = classname;
+    },
     getbestfit: function () {
         return this.bestfit;
+    },
+    takemiddlefit: function (middle) {
+        this.middlefit.push(middle);
+    },
+    takemiddlefitspace: function (middlespace, key) {
+        this.middlefitspace[key] = middlespace;
+    },
+    takemiddlefitclassvalue: function (middlespace, key) {
+        this.middlefitclassvalue[key] = middlespace;
+    },
+    getmiddlefit: function () {
+        return this.middlefit;
+    },
+    getmiddlefitclassvalue: function () {
+        return this.middlefitclassvalue;
+    },
+
+    getmiddlefitspace: function () {
+        return this.middlefitspace;
     },
 
     takebestfitspace: function (availabespace, key) {
@@ -53,6 +81,23 @@ var FITS = {
 
     getworsefitspace: function () {
         return this.worsefitspace;
+    },
+    bestspacedestructor : function () {
+        this.bestclassvalue = [];
+    },
+    middlespacedestructor: function () {
+      this.middleclassvalue  = [];  
+    },
+    destructor: function () {
+        this.bestfit = [];
+        this.worsefit = [];
+        this.bestfitspace = [];
+        this.worsefitspace = [];
+        this.worseclassvalue = [];
+        this.bestclassvalue = [];
+        this.middlefitclassvalue = [];
+        this.middlefit = [];
+        this.middlefitspace = [];
     }
 };
 
@@ -106,7 +151,7 @@ var INITIALS = {
     takeremainingstudent: function (value) {
         this.remainingstudent = value;
     },
-    getremainingsudent: function () {
+    getremainingsutdent: function () {
         return this.remainingstudent;
     }
 };

@@ -16,196 +16,209 @@
             height: 250px;
             overflow-y: auto;
         }
-        .btn.hover:hover{
+
+        .btn.hover:hover {
             background-color: blue;
         }
-         .btn-primary:not(:disabled):not(.disabled).active, 
-    .btn-primary:not(:disabled):not(.disabled):active, 
-    .show>.btn-primary.dropdown-toggle{
-        color: #fff;
-        background-color: #F7B432;
-        border-color: #F7B432;
-    }
+
+        .btn-primary:not(:disabled):not(.disabled).active,
+        .btn-primary:not(:disabled):not(.disabled):active,
+        .show>.btn-primary.dropdown-toggle {
+            color: #fff;
+            background-color: #F7B432;
+            border-color: #F7B432;
+        }
     </style>
 </head>
 <script type="text/javascript"> var temp; </script>
 
 <body>
-    <div>
-        <table style="width:100%" border="1" bordercolor="green">
-            <tr>
-                <th>
-                    <center>Day</center>
-                </th>
-                {{#each periods}}
-                <th>
-                    <center>{{this}}</center>
-                </th>; {{/each}}
-            </tr>
-            {{#each day}}
-            <tr>
-                <td>
-                    <center>{{this}}</td>
-                </center>
-                {{#each ../periods}}
-                <td>
-
-                    <center>
-                        <button class="btn btn-success btn-primary btn-lg" data-toggle="modal" id="{{id1 ..this this}}" data-target="#courses" style="padding: 9.5% 49.75%; font-size: 10%; border-radius: 0%; max-width: 500% ;"
-                            onClick="getaddress(this.id)">
-
-                        </button>
+    <div class="container">
+        {{#each week}}
+        <div id="{{this}}" class>
+            <table style="width:100%" border="0" style="border-color:orange">
+                <tr>
+                    <th>
+                        <center>Day</center>
+                    </th>
+                    {{#each ../periods}}
+                    <th>
+                        <center>{{this}}</center>
+                    </th>{{/each}}
+                </tr>
+                {{#each ../day}}
+                <tr>
+                    <td>
+                        <center>{{this}}</td>
                     </center>
-                </td>
+                    {{#each ../../periods}}
+                    <td>
+
+                        <center>
+                            <button class="btn btn-success btn-primary btn-lg" data-toggle="modal" id="{{id1 ../../this ..this this}}" data-target="#courses"
+                                style="padding: 9.5% 49.75%; font-size: 10%; border-radius: 0%; max-width: 500%; border-color:white; background-color:wheat;"
+                                onClick="getaddress(this.id)">
+
+                            </button>
+                        </center>
+                    </td>
+                    {{/each}}
+                </tr>
                 {{/each}}
-            </tr>
-            {{/each}}
-        </table>
-        {{course}}
-        <div class="modal fade" id="courses" data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                        <h4 class="modal-title">Chose the Courses to schedule</h4>
-                    </div>
-                    <!-- Modal Body -->
-                    <div class="modal-body">
-                        <p class="statusMsg">do something</p>
-                        <table id="course_available">
-                           
-                        </table>
-                    </div>
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">Close</button>
-                    </div>
+            </table>
+        </div>{{/each}}
+        <br>
+        <br>
+        <button class="btn-lg btn-default pull-right">Save</button>
+    </div>
+    <div class="modal fade" id="courses" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Chose the Courses to schedule</h4>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <p class="statusMsg">do something</p>
+                    <table id="course_available">
+
+                    </table>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="modal fade" id="classavailable" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                        <h4 class="modal-title">Chose an exam hall for</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p class="statusMsg">Do something for </p>
-                        <table id="takeclass">
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+    <div class="modal fade" id="classavailable" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Chose an exam hall for</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="statusMsg">Do something for </p>
+                    <table id="takeclass">
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <script src="jquery-3.3.1.js"></script>
-        <link media="all" type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
-        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <!--   <script src="handlebars-v4.0.11.js" ></script>
+    <script src="jquery-3.3.1.js"></script>
+    <link media="all" type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!--   <script src="handlebars-v4.0.11.js" ></script>
                 
                 <script type="text/x-handlebars-template" id="handlebaes">
                    <!--
                 </script>-->
-        <script src="glm-ajax.js"></script>
-        <script type="text/javascript">
-            var tempid;
-            //sent = null;
-            tempid = [];
-            function call_modal() {
-                $(document).ready(function () {
-        
-                    alert('giles');
-                    $('#Mon_08').modal('show');
-                });
-            }
-            function creatcourse(value){
-              temp = '<tr><button class="btn btn-success btn-primary  btn-lg" data-toggle="modal" class="btn hover" data-target="#classavailable" id="'+ value +'"style="padding: 4% 10%; font-size: 100%; border-radius: 0%; background-color:darkcyan; border: 1px solid rgb(232, 232, 232); cursor: pointer; "onClick="getcourse(this.id)">'+value+'</button></d></tr ></tr >';
-              return temp;
-            }
+    <script src="glm-ajax.js"></script>
+    <script type="text/javascript">
 
-            function creatboutton(value) {
-                temp = '<tr><button class="btn btn-success btn-lg" data-toggle="modal" id="' + value + '" onClick="getselectclass(this.id)">' + value + '</button></td></tr>';
-                return temp;
-            }
-            function getcourse(clicked_id) {
-                tempid[1] = clicked_id;
-                var data = {};
-                data.value = tempid;
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    url: 'http://localhost:3000/receiver',
-                    success: function (data) {
-                        var sent;
-                        for (var i in data) {
-                            var value = data[i];
-                            sent += creatboutton(value);
-                        }
-                        document.getElementById("takeclass").innerHTML = sent;
+        $(document).ready(function () {
+      //  var courses = {{{ tojava courses }}};
+        alert("giles");
+        });
+
+        function creatcourse(value) {
+            temp = '<tr><span class="input-group-addon">class</span><button class="btn btn-success btn-primary  btn-lg" data-toggle="modal" class="btn hover" data-target="#classavailable" id="' 
+            + value + '"style="padding: 4% 10%; font-size: 100%; border-radius: 0%; background-color:darkcyan; border: 1px solid rgb(232, 232, 232); cursor: pointer; "onClick="getcourse(this.id)">' +
+             value + '</button></d></tr ></tr >';
+            return temp;
+        }
+
+        function creatboutton(value) {
+            temp = '<tr><span class="input-group-addon">class</span><button class="btn btn-success btn-lg" data-toggle="modal" id="' + 
+            value + '" onClick="getselectclass(this.id)">' + value + '</button></td></tr>';
+            return temp;
+        }
+        function getcourse(clicked_id) {
+            tempid[1] = clicked_id;
+            var data = {};
+            data.value = tempid;
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: 'http://localhost:3000/receiver',
+                success: function (data) {
+                    var sent;
+                    for (var i in data) {
+                        var value = data[i];
+                        sent += creatboutton(value);
                     }
-                });
-            }
-            function dis(temp2) {
-                xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("GET", "boardreceiver.js", false);
-                xmlhttp.send(null);
-                var temp = tempid + "class";
-                temp = xmlhttp.responseText;
-                temp = temp.split("<br>");
-            }
-            function sleep(milliseconds) {
-                var start = new Date().getTime();
-                for (var i = 0; i < 1e7; i++) {
-                    if ((new Date().getTime() - start) > milliseconds) {
-                        break;
-                    }
+                    document.getElementById("takeclass").innerHTML = sent;
+                }
+            });
+        }
+        function dis(temp2) {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "boardreceiver.js", false);
+            xmlhttp.send(null);
+            var temp = tempid + "class";
+            temp = xmlhttp.responseText;
+            temp = temp.split("<br>");
+        }
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds) {
+                    break;
                 }
             }
-            
-            function getaddress(clicked_id) {
-                tempid[0] = clicked_id;
-                  var data = {};
-                data.value = tempid;
-                $.ajax({
-                    type: 'POST',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    url: 'http://localhost:3000/receiver2',
-                    success: function (data) {
-                        var sent;
-                        for (var i in data) {
-                            var value = data[i];
-                            sent += creatboutton(value);
-                        }
-                        document.getElementById("course_available").innerHTML = sent;
-                    }
-                });
-            }
-            function getselectclass(clicked_id) {
-                tempid[2] = clicked_id;
-                alert(tempid);
-            }
+        }
 
-        </script>
+        function getaddress(clicked_id) {
+            tempid[0] = clicked_id;
+            var data = {};
+            data.value = tempid;
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: 'http://localhost:3000/receiver2',
+                success: function (data) {
+                    var sent;
+                    for (var i in data) {
+                        var value = data[i];
+                        sent += creatboutton(value);
+                    }
+                    document.getElementById("course_available").innerHTML = sent;
+                }
+            });
+        }
+        function getselectclass(clicked_id) {
+            tempid[2] = clicked_id;
+            alert(tempid);
+        }
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <div id="content-placeholder"></div>
 
 </body>
 

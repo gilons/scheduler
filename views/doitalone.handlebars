@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link media="all" type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .header_nav {
+            width: 75%;
+            height: 60%;
+        }
+
+        .header_nav ul {
+            list-style: none; //displaying ul & all its child as inline block until overriden by other rules
+            display: inline-block; //removing default margin and padding
+            margin: 0;
+            padding: 0;
+        }
+
+        .header_nav ul ul {
+            display: none;
+        }
+
+        .header_nav ul ul #nav_button:hover>ul {
+            display: block;
+        }
+
+        .header_nav ul ul li>ul {
+            display: none;
+        }
+
+        .header_nav ul li:hover>ul {
+            display: block;
+        }
+
+        #takeclass {
+            float: left;
+            width: 103%;
+            overflow-y: auto;
+            height: 400px;
+        }
+
+        #course_available {
+            float: left;
+            width: 100%;
+            overflow-y: auto;
+            height: 150px;
+        }
+
+        #course {
+            width: 1%;
+            height: 50%;
+            padding-left: 0 12px 0px 5px;
+        }
+
+        .modal-dialog {
+            overflow-y: initial !important
+        }
+
+        .giles {
+            height: 650px;
+            padding-top: 20px;
+        }
+
+        .modal-body {
+            height: 250px;
+            overflow-y: auto;
+        }
+
+        .btn.hover:hover {
+            background-color: blue;
+        }
+
+        #mySidenav a {
+            position: absolute;
+            /* Position them relative to the browser window */
+            left: -80px;
+            /* Position them outside of the screen */
+            transition: 0.3s;
+            /* Add transition on hover */
+            padding: 15px;
+            /* 15px padding */
+            width: 100px;
+            /* Set a specific width */
+            text-decoration: none;
+            /* Remove underline */
+            font-size: 20px;
+            /* Increase font size */
+            color: white;
+            /* White text color */
+            border-radius: 0 5px 5px 0;
+            /* Rounded corners on the top right and bottom right side */
+        }
+
+        #mySidenav a:hover {
+            left: 0;
+            /* On mouse-over, make the elements appear as they should */
+        }
+
+        /* The about link: 20px from the top with a green background */
+
+        #undos {
+            top: 50px;
+            width: 100px;
+            height: 50px;
+            border-radius: 0%;
+            color: black;
+            background-color:darkred;
+            /* Red */
+        }
+
+        #next {
+            top: 140px;
+            border-radius: 0%;
+            background-color: green;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled).active,
+        .btn-primary:not(:disabled):not(.disabled):active,
+        .show>.btn-primary.dropdown-toggle {
+            color: #fff;
+            background-color: #F7B432;
+            border-color: indianred;
+        }
+
+        .dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+
+
+.dropdown-content {
+    display: none;
+}
+
+.dropdown-content a:hover {background-color: #ddd}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+    </style>
+</head>
+<script type="text/javascript"> var temp; </script>
+
+<body style="background-color:black">
+    <div class="dropdown">
+       <center><button class="dropbtn" style="color:black;background-color:wheat">
+        <h3>SCHEDULING FOR {{facname}}</h3>
+    </button></center>
+        <div class="dropdown-content">
+            {{#each facs}}
+           <center><button id="{{this}}" style="color:#F7B432;border:0px;background-color:black;" onclick="changefac(this.id)"><h3>SCHEDULE FOR {{this}}</h3></button></center>
+           {{/each}}
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        {{#each week}}
+        <div id="{{this}}" class="giles" style="background-color:white; width:1200px ">
+            <div id="mySidenav" class="sidenav">
+                <button class="btn-default" id="undos" title="Click to Undo every thing for this faculty" style="border:0px;  " onclick="dropallscheduled()">UNDO</button>
+                <a href="http://localhost:3000/create" id="next" title="Click here to undo most previous changes">NEXT</a>
+            </div>
+            <center>
+                <h2>WEEK-{{add1 this}}</h2>
+            </center>
+            <br>
+            <br>
+            <table style="width:100%" border="0" style="border-color:orange; background-color:dimgrey">
+                <tr>
+                    <th>
+                        <center>Day</center>
+                    </th>
+                    {{#each ../periods}}
+                    <th>
+                        <center>{{this}}</center>
+                    </th>{{/each}}
+                </tr>
+                {{#each ../day}}
+                <tr>
+                    <td>
+                        <center>{{this}}</td>
+                    </center>
+                    {{#each ../../periods}}
+                    <td>
+                        <div class="header_nav">
+                            <ul>
+                                <li>
+                                    <center>
+                                        <input type="button" class="btn btn-success btn-primary btn-lg" name="nav_button" data-toggle="modal" id="{{id1 ../../this ..this this}}"
+                                            data-target="#courses" style="padding: 14.5px 170.75px; border-radius: 0%;  max-width: 500%;
+                                             color:black; border-color:white; background-color:wheat;" onClick="getaddress(this.id)">
+                                    </center>
+                                    <ul>
+                                        <div style="background-color:khaki; width:346px;">
+                                            <center id="{{id1 ../../this ..this this}}list">
+                                            </center>
+                                        </div>
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    {{/each}}
+                </tr>
+                {{/each}}
+            </table>
+        </div>{{/each}}
+        <br>
+        <br>
+    </div>
+    <div class="modal fade" id="courses" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width:400px">
+
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <center style="background-color:chocolate;font-size:25px; color:wheat;">
+                        Chose the Course to schedule</center>
+                </h4>
+            </div>
+            <!-- Modal Body -->
+            <center>
+                <div id="course_available">
+                </div>
+            </center>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" data-dismiss="modal" style="border-radius:0%; border-color:#F7B432; background-color:orange">CLOSE</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="classavailable" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" id="choose">
+
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <button class="btn btn-default pull-left" title="Click to undo most recent action" style="border-radius:0px; background-color:maroon; color:white;"
+                        id="undo">UNDO</button>
+                    <center id="detail1">Choose The Examination hall</center>
+                </h4>
+            </div>
+
+            <p class="statusMsg">
+                <center id="detail2">Choose Your Couses</center>
+            </p>
+            <div id="takeclass">
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default pull-right" id="close" data-dismiss="modal" style="border-radius:0%; color:white; border-color:#F7B432; background-color:orange"
+                    title="close the window">CLOSE</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="jquery-3.3.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!--   <script src="handlebars-v4.0.11.js" ></script>
+!-->
+    <script src="glm-ajax.js"></script>
+    <script type="text/javascript">
+        var tempcoursevalue;
+        var tempid = [];
+        var courses = [];
+        var classes = [];
+        var course_values = [];
+        var globaldid = {};
+        globaldid.classes = [];
+        var scheduled = [];
+        function writeskeduled(scheduled) {
+            for (var i = 0; i < scheduled.length; i++) {
+                var id = scheduled[i][0] + "list";
+                document.getElementById(id).innerHTML = null;
+                document.getElementById(id).innerHTML = "<li>" + scheduled[i][1] + "</li>";
+            }
+        }
+        $(document).ready(function () {
+            scheduled = {{{ tojava scheduled }}};
+        writeskeduled(scheduled);
+        });
+   function changefac(facname){
+       $.post('http://localhost:3000/changefac',{value:facname},function(data){
+           location.reload();
+       });
+        }
+        function addclasses(data, callback) {
+            document.getElementById("takeclass").innerHTML = null;
+            var bestfitarraylimit = data[data.length - 4][1];
+            var milldlefitarraylimit = data[data.length - 3][1];
+            var length;
+            if(data[data.length-2][1] === null) {
+                  for (var j = 0; j < 3; j++) {
+                    for (var i = 0; i < (data[j].length); i++) {
+                        if (j === 0) {
+                            document.getElementById("takeclass").innerHTML += createDisabledButton(data[j][i][0], data[j][i][1], "maroon");
+                        } else if (j === 1) {
+                            document.getElementById("takeclass").innerHTML += createDisabledButton(data[j][i][0], data[j][i][1], "chocolate");
+                        } else if (j === 2) {
+                            document.getElementById("takeclass").innerHTML += createDisabledButton(data[j][i][0], data[j][i][1], "wheat");
+                        }
+                    }
+                }
+            }else{
+                  for (var j = 0; j < 3; j++) {
+                    for (var i = 0; i < (data[j].length); i++) {
+                        if (j === 0) {
+                            document.getElementById("takeclass").innerHTML += creatboutton(data[j][i][0], data[j][i][1], "maroon");
+                        } else if (j === 1) {
+                            document.getElementById("takeclass").innerHTML += creatboutton(data[j][i][0], data[j][i][1], "chocolate");
+                        } else if (j === 2) {
+                            document.getElementById("takeclass").innerHTML += creatboutton(data[j][i][0], data[j][i][1], "wheat");
+                        }
+                    }
+                }
+            }
+            callback("yes");
+        }
+
+        function creatcourse(value, value1) {
+            temp = '<button class="btn btn-success" data-dismiss="modal" data-toggle="modal"data-target="#classavailable"' +
+                ' style="background-color:wheat; color:black; border-color:white; border-size:6%; border-radius:0%;"  id="' +
+                value + '"onClick="getcourse(this.id)">' +
+                value + ' <span class="input-group-Addon" style="background-color:white; width:9%;">' +
+                value1 + '</span ></button>';
+            return temp;
+        }
+        function createDisabledButton(value, value1, color, width){
+            temp = '<button class="btn btn-success" data-toggle="modal" style=" width:150px; background-color:' +
+                color + '; color:black; border-color:white; border-size:6%; border-radius:0%;"  id="' +
+                value + '" onClick="getselectclass(this.id)" disabled>' +
+                value + ' <span class="input-group-Addon" style="background-color:black; color:white; font-size:20px;">' +
+                value1 + ' </span ></button>';
+            return temp;
+        }
+        function creatboutton(value, value1, color, width) {
+            temp = '<button class="btn btn-success" data-toggle="modal" style=" width:150px; background-color:' +
+                color + '; color:black; border-color:white; border-size:6%; border-radius:0%;"  id="' +
+                value + '" onClick="getselectclass(this.id)">' +
+                value + ' <span class="input-group-Addon" style="background-color:black; color:white; font-size:20px;">' +
+                value1 + ' </span ></button>';
+            return temp;
+        }
+        function getcourse(clicked_id) {
+            tempid[1] = clicked_id;
+            globaldid = {};
+            classes = [];
+            var data = {};
+            document.getElementById("takeclass").innerHTML = null;
+            data.value = tempid;
+            data.origine = 'myself'
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: 'http://localhost:3000/receiver',
+                success: function (data) {
+                    addclasses(data, function (status) {
+                        if (status == "yes") {
+                            tempcoursevalue = data[data.length - 2][1];
+                            document.getElementById("detail1").innerHTML = null;
+                            document.getElementById("detail2").innerHTML = null;
+
+                            var detail1 = '<span style="background-color:chocolate;font-size:25px; color:wheat;">' +
+                                'Choose A hall(or halls) For ' + data[data.length - 2][0] + '</span>';
+                            document.getElementById("detail1").innerHTML = detail1;
+                            var detail2 = '<span style="background-color:indianred; font-size:20px;">' +
+                                'Remaining: <span style="color:maroon;">' + data[data.length - 2][1] +
+                                '/' + tempcoursevalue + '<span>';
+                            document.getElementById("detail2").innerHTML = detail2;
+                        }
+                    });
+                }
+            });
+        }
+        function dis(temp2) {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "boardreceiver.js", false);
+            xmlhttp.send(null);
+            var temp = tempid + "class";
+            temp = xmlhttp.responseText;
+            temp = temp.split("<br>");
+        }
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds) {
+                    break;
+                }
+            }
+        }
+       $('#close').on('click', function () {
+            if (globaldid.course) {
+                if(globaldid.classes[0] === undefined){
+
+                }else{
+                      $.post('http://localhost:3000/addtoscheduled',
+                        { globaldid: globaldid }, function () {
+
+                        });
+                }
+            }
+        })
+        function getaddress(clicked_id) {
+            tempid[0] = clicked_id;
+            temp = clicked_id.substr(0, 6);
+            temp = temp + "class";
+            document.getElementById("course_available").innerHTML = null;
+            $.post("http://localhost:3000/receiver2", { avalue: clicked_id,origine:'myself' }, function (data) {
+                if (!data[0]) {
+                    var courseMssage = '<h3>Thers is no Convinient Course For This period </h3>'
+                    document.getElementById("course_available").innerHTML += courseMssage;
+                }
+                for (var i = 0; i < data.length; i++) {
+                    document.getElementById("course_available").innerHTML += creatcourse(data[i][0], data[i][1]);
+                }
+            });
+        }
+        function getselectclass(clicked_id) {
+           tempid[2] = clicked_id;
+            classes.push(clicked_id);
+            document.getElementById(tempid[0]).innerHTML = null;
+            $.post("http://localhost:3000/receive", { value: tempid,origine:'myself' }, function (data) {
+                addclasses(data, function (status) {
+                    if (status = "yes") {
+                        $('#close').hide();
+                        document.getElementById("detail1").innerHTML = null;
+                        document.getElementById("detail2").innerHTML = null;
+                        var detail1 = '<span style="background-color:chocolate;font-size:25px; color:wheat;">' +
+                            'Choose A hall(or halls) For ' + data[data.length - 2][0] + '</span>';
+                        document.getElementById("detail1").innerHTML = detail1;
+                        var detail2 = '<span style="background-color:indianred; font-size:20px;">' +
+                            'Remaining<span style="color:maroon;">' + data[data.length - 2][1] +
+                            '/' + tempcoursevalue + '<span>';
+                        document.getElementById("detail2").innerHTML = detail2;
+                         writeskeduled(data[data.length - 1]);
+                        if (data[data.length - 2][1] == null || data[data.length - 2][1] == 0 || data[data.length - 2][1] == undefined) {
+                            $('#close').show();
+                            globaldid.classes = classes;
+                            globaldid.course = tempid[1];
+                            globaldid.course_values = tempcoursevalue;
+                            globaldid.period = tempid[0];
+                        }
+                        if (data[data.length - 2][1] === tempcoursevalue) {
+                            $('#close').show();
+                        }
+                    }
+                });
+            });
+        }
+
+        $("#undo").on("click", function () {
+            var temp = classes.pop();
+            $.post("http://localhost:3000/undo", { value: tempid,origine:'myself' }, function (data) {
+                addclasses(data, function (status) {
+                    if (status == "yes") {
+                        document.getElementById("detail1").innerHTML = null;
+                        document.getElementById("detail2").innerHTML = null;
+                        var detail1 = '<span style="background-color:chocolate;font-size:25px; color:wheat;">' +
+                            'Choose A hall(or halls) For ' + data[data.length - 2][0] + '</span>';
+                        document.getElementById("detail1").innerHTML = detail1;
+                        var detail2 = '<span style="background-color:indianred; font-size:20px;">' +
+                            'Remaining<span style="color:maroon;">' + data[data.length - 2][1] +
+                            '/' + tempcoursevalue + '<span>';
+                        document.getElementById("detail2").innerHTML = detail2;
+                        writeskeduled(data[data.length - 1]);
+                        if (data[data.length - 2][1] === tempcoursevalue) {
+                            $('#close').show();
+                        }
+                    }
+                });
+            }
+            )
+        });
+    function dropallscheduled () {
+        var r = confirm("your are about to drop all scheduled for This faculty!");
+        var data = {};
+        data.value = 'univers';
+        if (r == true) {
+            $.post("http://localhost:3000/undoglobal", data, function (data) {
+                location.reload();
+            });
+        } else {
+        }
+    }
+    </script>
+</body>
+
+</html>
